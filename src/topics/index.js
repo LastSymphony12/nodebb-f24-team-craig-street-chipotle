@@ -35,6 +35,8 @@ require('./bookmarks')(Topics);
 require('./merge')(Topics);
 Topics.events = require('./events');
 
+require('./search')(Topics);
+
 Topics.exists = async function (tids) {
 	return await db.exists(
 		Array.isArray(tids) ? tids.map(tid => `topic:${tid}`) : `topic:${tids}`
