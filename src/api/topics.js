@@ -123,6 +123,14 @@ topicsAPI.delete = async function (caller, data) {
 	});
 };
 
+topicsAPI.search = async function (data) {
+	if (!data || !data.term) {
+		throw new Error('[[error:invalid-data]]');
+	}
+
+	return await topics.search(data.query, data.options);
+};
+
 topicsAPI.restore = async function (caller, data) {
 	await doTopicAction('restore', 'event:topic_restored', caller, {
 		tids: data.tids,
