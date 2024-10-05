@@ -11,6 +11,7 @@ const categories = require('../categories');
 const posts = require('../posts');
 const privileges = require('../privileges');
 const helpers = require('./helpers');
+const api = require('../api');
 const pagination = require('../pagination');
 const utils = require('../utils');
 const analytics = require('../analytics');
@@ -137,6 +138,14 @@ topicsController.get = async function getTopic(req, res, next) {
 		res.locals.linkTags.push(rel);
 	});
 	res.render('topic', topicData);
+};
+
+topicsController.search = async function (req, res) {
+	try {
+		await api.topics.search({ query: req.query, options: { uid: req.uid } });
+	} catch (error) {
+		return res.status(500).json({ error: error.message });
+	}
 };
 
 function generateQueryString(query) {
