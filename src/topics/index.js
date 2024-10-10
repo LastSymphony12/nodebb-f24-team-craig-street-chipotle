@@ -135,8 +135,7 @@ Topics.getTopicsByTids = async function (tids, options) {
 			if (topic.anonymous) {
 				topic.user.username = 'Anonymous';
 				topic.user.displayname = 'Anonymous';
-			}
-			else if (result.tidToGuestHandle[topic.tid]) {
+			} else if (result.tidToGuestHandle[topic.tid]) {
 				topic.user.username = validator.escape(result.tidToGuestHandle[topic.tid]);
 				topic.user.displayname = topic.user.username;
 			}

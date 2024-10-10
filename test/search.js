@@ -141,7 +141,7 @@ describe('Search', () => {
 			uid: 1,
 			cid: 1,
 			title: 'test topic',
-		}); 
+		});
 		await topics.reply({
 			tid: tmp,
 			uid: 1,

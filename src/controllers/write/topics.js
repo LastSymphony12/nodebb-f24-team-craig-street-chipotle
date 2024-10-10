@@ -110,8 +110,8 @@ Topics.search = async (req, res) => {
 		}
 		// Prepare data for the API call
 		const data = {
-		term,
-		query: req.query.query || '', // Any additional query parameters
+			term,
+			query: req.query.query || '', // Any additional query parameters
 		};
 		// Call the API to search topics
 		const results = await api.topics.search(data);
