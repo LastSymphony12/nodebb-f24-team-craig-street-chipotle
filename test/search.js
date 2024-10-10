@@ -139,21 +139,21 @@ describe('Search', () => {
 	it('should search for a topic', async () => {
 		const tmp = await topics.create({
 			uid: 1,
-			cid: 1, 
-			title: "test topic",
+			cid: 1,
+			title: 'test topic',
 		}); 
 		await topics.reply({
-			tid: tmp, 
+			tid: tmp,
 			uid: 1,
-			content: "test reply", 
-		}); 
+			content: 'test reply',
+		});
 		const result = await search.search({
 			query: 'test topic',
 			searchIn: 'titlesposts',
-		}); 
-		assert.strictEqual(result.matchCount, 1); 
-		assert.strictEqual(result.posts[0].topic.title, 'test topic'); 
-	}); 
+		});
+		assert.strictEqual(result.matchCount, 1);
+		assert.strictEqual(result.posts[0].topic.title, 'test topic');
+	});
 
 	it('should fail if searchIn is wrong', (done) => {
 		search.search({
