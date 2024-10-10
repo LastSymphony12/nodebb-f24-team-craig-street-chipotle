@@ -130,11 +130,7 @@ Topics.getTopicsByTids = async function (tids, options) {
 			topic.thumbs = result.thumbs[i];
 			topic.category = result.categoriesMap[topic.cid];
 			topic.user = topic.uid ? result.usersMap[topic.uid] : { ...result.usersMap[topic.uid] };
-			if (topic.anonymous) {
-                topic.user.username = 'Anonymous';
-                topic.user.displayname = 'Anonymous';
-            }
-			else if (result.tidToGuestHandle[topic.tid]) {
+			if (result.tidToGuestHandle[topic.tid]) {
 				topic.user.username = validator.escape(result.tidToGuestHandle[topic.tid]);
 				topic.user.displayname = topic.user.username;
 			}

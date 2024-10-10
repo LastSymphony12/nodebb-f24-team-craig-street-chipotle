@@ -17,8 +17,6 @@ const translator = require('../translator');
 
 module.exports = function (Topics) {
 	Topics.create = async function (data) {
-		//testing data passed in
-		console.log('Incoming data:', data);
 		// This is an internal method, consider using Topics.post instead
 		const timestamp = data.timestamp || Date.now();
 		//Setting to false to prevent the creation of a tag for anonymous users
@@ -37,8 +35,12 @@ module.exports = function (Topics) {
 			lastposttime: 0,
 			postcount: 0,
 			viewcount: 0,
-			anonymous: anonymous, // line for creating a tag for anonymous function
+			anonymous: true // line for creating a tag for anonymous function
 		};
+
+		//this line is to see console output
+		console.log('Incoming data:', data);
+		console.log('Topic data to be saved:', topicData);
 
 		if (Array.isArray(data.tags) && data.tags.length) {
 			topicData.tags = data.tags.join(',');
@@ -155,9 +157,9 @@ module.exports = function (Topics) {
 		}
 
 		//adde line for posts reply to anonymous users
-		if (data.anonymous) {
-			postData.user.displayname = 'Anonymous'; // Only modify the main post's display name
-		}
+		// if (data.anonymous) {
+		// 	postData.user.displayname = 'Anonymous'; // Only modify the main post's display name
+		// }
 
 		analytics.increment(['topics', `topics:byCid:${topicData.cid}`]);
 		plugins.hooks.fire('action:topic.post', { topic: topicData, post: postData, data: data });
@@ -217,10 +219,10 @@ module.exports = function (Topics) {
 			user.setUserField(uid, 'lastonline', Date.now());
 		}
 
-		//adde line for posts reply to anonymous users
-		if (data.anonymous) {
-			postData.user.displayname = 'Anonymous'; // Only modify the main post's display name
-		}
+		// //adde line for posts reply to anonymous users
+		// if (data.anonymous) {
+		// 	postData.user.displayname = 'Caroline Here 2'; // Only modify the main post's display name
+		// }
 
 		if (parseInt(uid, 10) || meta.config.allowGuestReplyNotifications) {
 			const { displayname } = postData.user;
