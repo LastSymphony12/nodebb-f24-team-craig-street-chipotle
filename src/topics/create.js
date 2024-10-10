@@ -35,7 +35,7 @@ module.exports = function (Topics) {
 			lastposttime: 0,
 			postcount: 0,
 			viewcount: 0,
-			anonymous: true // line for creating a tag for anonymous function
+			anonymous: anonymous // line for creating a tag for anonymous function
 		};
 
 		//this line is to see console output
