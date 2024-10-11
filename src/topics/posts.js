@@ -48,9 +48,6 @@ module.exports = function (Topics) {
 		if (!postData.length) {
 			return [];
 		}
-		postData.forEach((post) => {
-			const anonymous = false;
-		});
 		let replies = postData;
 		if (topicData.mainPid && start === 0) {
 			postData[0].index = 0;
