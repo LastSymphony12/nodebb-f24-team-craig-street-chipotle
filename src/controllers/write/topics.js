@@ -100,6 +100,29 @@ Topics.unfollow = async (req, res) => {
 	helpers.formatApiResponse(200, res);
 };
 
+Topics.search = async (req, res) => {
+	try {
+		// Destructures the query parameters sent in the URL request
+		const { term } = req.query;
+		// Validate the input
+		if (!term) {
+			throw new Error('[[error:invalid-data]]');
+		}
+		// Prepare data for the API call
+		const data = {
+			term,
+			query: req.query.query || '', // Any additional query parameters
+		};
+		// Call the API to search topics
+		const results = await api.topics.search(data);
+		// Format the response
+		helpers.formatApiResponse(200, res, results);
+	} catch (error) {
+		// Handle any errors
+		helpers.formatApiResponse(500, res, { error: error.message });
+	}
+};
+
 Topics.updateTags = async (req, res) => {
 	const payload = await api.topics.updateTags(req, {
 		tid: req.params.tid,
