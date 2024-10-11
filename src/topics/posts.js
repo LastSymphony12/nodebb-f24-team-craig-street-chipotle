@@ -48,10 +48,9 @@ module.exports = function (Topics) {
 		if (!postData.length) {
 			return [];
 		}
-		postData.forEach(post => {
+		postData.forEach((post) => {
 			post.anonymous = topicData.anonymous; // Add the anonymous flag to each post
 		});
-		
 		let replies = postData;
 		if (topicData.mainPid && start === 0) {
 			postData[0].index = 0;
@@ -144,9 +143,9 @@ module.exports = function (Topics) {
 				postObj.replies = replies[i];
 				postObj.selfPost = parseInt(uid, 10) > 0 && parseInt(uid, 10) === postObj.uid;
 
-				//  //for each post, check if the user has anonymous flag
-				//  if (postObj.anonymous){
-				// 	postObj.user.displayname = 'Caroline Here 4';
+				// //for each post, check if the user has anonymous flag
+				// if (postObj.anonymous){
+				// postObj.user.displayname = 'Caroline Here 4';
 				// }
 
 				// Username override for guests, if enabled
