@@ -19,8 +19,8 @@ module.exports = function (Topics) {
 	Topics.create = async function (data) {
 		// This is an internal method, consider using Topics.post instead
 		const timestamp = data.timestamp || Date.now();
-		//hardcoded until we have a proper way to handle anonymous users
-		const anonymous = true;
+		// Setting to false to prevent the creation of a tag for anonymous users
+		const anonymous = (data.anonymous === true);
 
 		const tid = await db.incrObjectField('global', 'nextTid');
 
@@ -38,6 +38,10 @@ module.exports = function (Topics) {
 			anonymous: anonymous, // line for creating a tag for anonymous function
 		};
 
+		// this line is to see console output
+		console.log('Incoming data:', data);
+		console.log('Topic data to be saved:', topicData);
+
 		if (Array.isArray(data.tags) && data.tags.length) {
 			topicData.tags = data.tags.join(',');
 		}
@@ -51,7 +55,7 @@ module.exports = function (Topics) {
 			`cid:${topicData.cid}:tids`,
 			`cid:${topicData.cid}:tids:create`,
 			// `cid:${topicData.cid}:uid:${topicData.uid}:tids`,
-			//commented out to prevent the creation of a tag for anonymous users
+			// commented out to prevent the creation of a tag for anonymous users
 		];
 
 		const scheduled = timestamp > Date.now();
@@ -152,6 +156,11 @@ module.exports = function (Topics) {
 			await Topics.delete(tid);
 		}
 
+		// added line for posts reply to anonymous users
+		// if (data.anonymous) {
+		// postData.user.displayname = 'Anonymous'; // Only modify the main post's display name
+		// }
+
 		analytics.increment(['topics', `topics:byCid:${topicData.cid}`]);
 		plugins.hooks.fire('action:topic.post', { topic: topicData, post: postData, data: data });
 
@@ -210,12 +219,13 @@ module.exports = function (Topics) {
 			user.setUserField(uid, 'lastonline', Date.now());
 		}
 
+		// added line for posts reply to anonymous users
+		// if (data.anonymous) {
+		// postData.user.displayname = 'Caroline Here 2'; // Only modify the main post's display name
+		// }
+
 		if (parseInt(uid, 10) || meta.config.allowGuestReplyNotifications) {
 			const { displayname } = postData.user;
-			 //Added line to make displayname anonymous if anonymous is triggered true
-			 if (data.anonymous == true) {
-                postData.user.displayname = 'Anonymous';
-            }
 			Topics.notifyFollowers(postData, uid, {
 				type: 'new-reply',
 				bodyShort: translator.compile('notifications:user-posted-to', displayname, postData.topic.title),
