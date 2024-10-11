@@ -37,6 +37,9 @@ module.exports = function (Topics) {
 			viewcount: 0,
 		};
 
+		if (anonymous) {
+			user.displayname = 'Anonymous';
+		}
 		// this line is to see console output
 		console.log('Incoming data:', data);
 		console.log('Topic data to be saved:', topicData);
