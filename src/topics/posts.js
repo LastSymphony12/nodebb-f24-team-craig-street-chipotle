@@ -49,7 +49,7 @@ module.exports = function (Topics) {
 			return [];
 		}
 		postData.forEach((post) => {
-			post.anonymous = topicData.anonymous; // Add the anonymous flag to each post
+			const anonymous = false;
 		});
 		let replies = postData;
 		if (topicData.mainPid && start === 0) {
